@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Print your document - CloudCopy</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      /* Set your background image here */
+      background: url('jean-philippe-delberghe-75xPHEQBmvA-unsplash.jpg') no-repeat center center fixed;
+      background-size: cover;
+      /* Fallback background color */
+      background-color: #ffffff;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 40px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .logo {
+      color: #46b7f8;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .delivery-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .search-container {
+      flex-grow: 1;
+      max-width: 600px;
+      margin: 0 20px;
+    }
+
+    .search-bar {
+      width: 100%;
+      padding: 12px 20px;
+      border: 1px solid #f0f0f0;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+    }
+
+    .login-btn {
+      padding: 8px 20px;
+      text-decoration: none;
+      color: #000000;
+    }
+
+    .cart-btn {
+      padding: 8px 20px;
+      background-color: #1092c5;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .main-content {
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .print-store-title {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .print-store-subtitle {
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    .upload-container {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .upload-section {
+      flex: 1;
+      background-color: #f8f9fa;
+      padding: 30px;
+      border-radius: 12px;
+      min-width: 300px;
+    }
+
+    .upload-title {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .upload-subtitle {
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .drop-zone {
+      border: 2px dashed #666;
+      border-radius: 8px;
+      padding: 40px;
+      text-align: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+
+    .drop-zone:hover {
+      border-color: #004d8c;
+    }
+
+    .upload-icon {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 16px;
+    }
+
+    .drop-zone p {
+      color: #666;
+      margin-top: 8px;
+    }
+
+    .upload-btn {
+      background-color: #0d96cc;
+      color: rgb(255, 255, 255);
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+
+      width: 100%;  /* Make button width responsive */
+      max-width: 400px; /* Set max width to prevent it from stretching too much */
+      height: 50px; 
+      padding: 10px;  /* Remove fixed horizontal padding */
+      border-radius: 8px;
+      text-align: center;
+      display: block;  /* Ensure it takes full width */
+    }
+
+    .upload-btn:hover {
+      background-color: #003470;
+    }
+
+    .upload-limits {
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+      margin-top: 12px;
+    }
+
+    .illustration {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 300px;
+    }
+
+    .illustration img {
+      width: 100%;
+      height: auto;
+    }
+
+    /* Advertisement section styling */
+    .advertisement-section {
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #f0f0f0;
+      border-radius: 12px;
+    }
+
+    .advertisement-section h2 {
+      font-size: 32px;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .ad-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .ad-box {
+      flex: 1;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      min-width: 300px;
+    }
+
+    .ad-box img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    /*trans*/
+    .advertise-page {
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #f0f0f0;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+
+    .advertise-page h2 {
+      font-size: 32px;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .training-products-container {
+      display: flex;
+      gap: 20px;
+      width: 300%;
+      animation: slideLeft 10s linear infinite;
+    }
+
+    .training-product {
+      flex: 1;
+      min-width: 300px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .training-product img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .footer {
+      overflow: hidden;
+      background: rgba(8, 8, 8, 0.85);
+      color: #fff;
+    }
+    .footer .grid-3 {
+      padding: 30px 0;
+    }
+    .site-links a {
+      display: block;
+      margin: 10px 0;
+    }
+    .social ul {
+      list-style: none;
+    }
+    .social ul li {
+      display: inline;
+      padding: 8px;
+    }
+/*footer end css*/
+    @keyframes slideLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">CloudCopy</div>
+    <div class="delivery-info">
+      <span> -----------------------</span>
+    </div>
+    <div class="search-container">
+      <input type="text" class="search-bar" placeholder='Search "stationery"' />
+    </div>
+    <a href="#" class="login-btn">Login</a>
+    <a href="#" class="cart-btn">My Cart</a>
+  </nav>
+
+  <main class="main-content">
+    <h1 class="print-store-title">Print your Documents</h1>
+    <p class="print-store-subtitle">CloudCopy make your work easy</p>
+
+    <div class="upload-container">
+      <div class="upload-section">
+        <h2 class="upload-title">Upload your files</h2>
+        <p class="upload-subtitle">
+          We support all popular formats like PDF, JPG, PNG, JPEG etc
+        </p>
+
+        <div class="drop-zone">
+          <svg
+            class="upload-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path d="M4 6h14v14H4z" fill="#E8EAF6" />
+            <path d="M6 4h14v14H6z" fill="#F5F6FA" />
+            <path d="M8 2h14v14H8z" fill="#FFFFFF" stroke="#666666" stroke-width="1.5" />
+            <path
+              d="M15 6l-3-3-3 3M12 3v8"
+              stroke="#666666"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"
+            />
+          </svg>
+          <p>Drop files here</p>
+        </div>
+
+        <a href="demo.html" class="upload-btn">Upload your files</a>
+        <p class="upload-limits">
+          Maximum upload file size: 50 MB • Maximum files: 15
+        </p>
+      </div>
+
+      <div class="illustration">
+        <img src="illustration.png" alt="Make Your Work Fast" />
+      </div>
+    </div>
+
+    <!-- Advertisement Tab Section -->
+    <section class="advertisement-section">
+      <h2>Select your type collection</h2>
+      <div class="ad-container">
+        <div class="ad-box">
+          <img
+            src="Your paragraph text.png"
+            alt="Advertisement 1"
+            width="500px"
+            height="500px"
+          />
+        </div>
+        <div class="ad-box">
+          <img
+            src="1baadfa1ea4e69b6196e07ef77bd83e486a9f7b3.jpg"
+            alt="Advertisement 2"
+            width="500px"
+            height="500px"
+            style="margin-top: 10px;"
+          />
+        </div>
+      </div>
+    </section>
+<!--trans-->
+<section class="advertise-page">
+  <h2>Trending Products</h2>
+  <div class="training-products-container">
+    <div class="training-product">
+      <img src="Home.jpg" alt="Product 1" />
+    </div>
+    <div class="training-product">
+      <img src="Home.jpg" alt="Product 2" />
+    </div>
+    <div class="training-product">
+      <img src="Home.jpg" alt="Product 3" />
+    </div>
+    <div class="training-product">
+      <img src="Home.jpg" alt="Product 4" />
+    </div>
+    <div class="training-product">
+      <img src="Home.jpg" alt="Product 5" />
+    </div>
+    <div class="training-product">
+      <img src="Home.jpg" alt="Product 6" />
+    </div>
+    <div class="training-product">
+      <img src="Home.jpg" alt="Product 70" />
+    </div>
+  </div>
+</section>
+  </main>
+  <!--footer-->
+  <section class="footer">
+    <div class="container">
+        <div class="grid-3">
+            <div class="text-center">
+                <h3>About Us</h3><br>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat officia, temporibus expedita dicta eligendi harum architecto fugiat sint, laudantium omnis animi. Voluptas praesentium maiores minima pariatur necessitatibus consequuntur, similique assumenda.</p>
+            </div>
+            <div class="texr-center">
+                <h3>Site Map</h3><br>
+                <div class="site-links">
+                    <a href="categories.html">Categories</a>
+                    <a href="foods.html">Foods</a>
+                    <a href="order.html">Order</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="login.html">Login</a>
+                </div>
+            </div>
+            <div class="social-links">
+                <h3>Social Links</h3><br>
+                <div class="social">
+                    <ul>
+                        <li><a href="https://youtube.com/@codearcade-se4rc?si=2vBakC9_9-q3AL0y"><img src="https://img.icons8.com/color/48/null/facebook-new.png"/></a></li>
+                        <li><a href="https://youtube.com/@codearcade-se4rc?si=2vBakC9_9-q3AL0y"><img src="https://img.icons8.com/fluency/48/null/instagram-new.png"/></a></li>
+                        <li><a href="https://youtube.com/@codearcade-se4rc?si=2vBakC9_9-q3AL0y"><img src="https://img.icons8.com/color/48/null/twitter--v1.png"/></a></li>
+                        <li><a href="https://youtube.com/@codearcade-se4rc?si=2vBakC9_9-q3AL0y"><img src="https://img.icons8.com/color/48/null/linkedin-circled--v1.png"/></a></li>
+                        <li><a href="https://youtube.com/@codearcade-se4rc?si=2vBakC9_9-q3AL0y"><img src="https://img.icons8.com/color/48/null/youtube-play.png"/></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+  <!--End of footer code-->
+  <script>
+    const dropZone = document.querySelector('.drop-zone');
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach((eventName) => {
+      dropZone.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach((eventName) => {
+      dropZone.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach((eventName) => {
+      dropZone.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight(e) {
+      dropZone.style.borderColor = '#008c45';
+    }
+
+    function unhighlight(e) {
+      dropZone.style.borderColor = '#666';
+    }
+
+    dropZone.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      handleFiles(files);
+    }
+
+    function handleFiles(files) {
+      console.log('Files dropped:', files);
+    }
+  </script>
+</body>
+</html>
